@@ -155,6 +155,42 @@ li:hover
     color: black;
 }
 
+.buttonContainer img
+{
+    width: 100%;
+    padding-top: 11px;
+    padding-left: 50px
+}
+
+.rightcontainer
+{
+    position: absolute;
+    top: 0;
+    left: 50%;
+    width: 50%;
+    height: 40%;
+}
+
+.rightcontainer img
+{
+    width: 100%;
+    height: 100%;
+}
+
+.serviceContainer
+{
+    position: relative;
+    top: 40px;
+    left: 46px;
+    width: 75%;
+    height: 350px;
+}
+
+.serviceContainer p
+{
+    font-size: 20px;
+    font-weight: 600;
+}
 
 
 
