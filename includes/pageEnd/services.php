@@ -12,7 +12,7 @@
             from our team to work across any issue you face during the process.
         </p>
     </div>
-    <div class="rightContainer">
-        <img src="../../assets/images/travel.png" alt="">
+    <div class="rightContainer1">
+       <img src="../../Ticketer/assets/images/travel.png">
     </div>
 </div>
