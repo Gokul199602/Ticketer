@@ -1,3 +1,36 @@
+<?php
+    require_once("includes/config.php");
+    require_once("includes/classes/FormSanitizer.php");
+    require_once("includes/classes/Account.php");
+    require_once("includes/classes/Validate.php");
+    $account = new Account($con);
+    if(isset($_POST["submitbotton"])){
+      $un = FormSanitizer::sanitizeform($_POST["username"]);
+      $em = FormSanitizer::sanitizeform($_POST["email"]);
+      $pw = FormSanitizer::sanitizePassword($_POST["password"]);
+      $pw1 = FormSanitizer::sanitizePassword($_POST["password1"]);
+
+      $wasSuccessful = $account->register($un,$em,$pw,$pw1);
+      if($wasSuccessful) 
+      {
+          $_SESSION['k'] = 1;
+          header("location:register.php");
+      }
+    }
+
+    if(isset($_POST['loginbotton']))
+    {
+        $un = $_POST["username"];
+        $pw = $_POST["password"];
+        $wasSuccessful = $account->login($un,$pw);
+        if($wasSuccessful) 
+        {
+            $_SESSION['username'] = $un;
+            header("location:includes/index.php");
+        }
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -21,32 +54,101 @@
     <title>Manju Tickets</title>
 </head>
 <body>
+<?php 
+		if(isset($_POST['submitbotton']))
+		{
+			echo "<script >
+       $(document).ready(function()
+		     {
+			
+				$('.loginContainer').hide();
+				$('.registerContainer').show();
+			
+		      }
+			);
+	</script>";
+		}
+		else
+		{
+			echo "<script >
+       $(document).ready(function()
+		     {
+			
+				$('.loginContainer').show();
+				$('.registerContainer').hide();
+			
+		      }
+			);
+	</script>";
+		}
+	?>
+
     <nav>
-        <ul>
-            <span onclick="openPage('includes/pageEnd/contact.php')"><li id="contactUs"><i class="fa fa-address-book"></i>Contact Us</li></span>
-            <span onclick="openPage('includes/pageEnd/services.php')"><li id="services"><i class="fa fa-taxi"></i>Services</li></span>
-            <span><li id="header">Manju Tickets</li></span>
-            <span onclick="openPage('register.php')"><li id="contactUs"><i class="fa fa-user" aria-hidden="true"></i> Login</li></span>
-            <span onclick="openPage('includes/pageEnd/about.php')"><li id="about"><i class="fa fa-address-card"></i>About</li></span>
-        </ul>
+       <div id="navlinks">
+            <ul>
+                <span onclick="openPage('includes/pageEnd/contact.php')"><li id="contactUs" onclick="activeClass(this)"><i class="fa fa-address-book"></i>Contact Us</li></span>
+                <span onclick="openPage('includes/pageEnd/services.php')"><li id="services" onclick="activeClass(this)"><i class="fa fa-taxi"></i>Services</li></span>
+                <span><li id="header">Manju Tickets</li></span>
+                <span onclick="openPage('register.php')"><li id="contactUs" class="is_active" onclick="activeClass(this)"><i class="fa fa-user" aria-hidden="true"></i> Login</li></span>
+                <span onclick="openPage('includes/pageEnd/about.php')"><li id="about" onclick="activeClass(this)"><i class="fa fa-address-card"></i>About</li></span>
+            </ul>
+        </div>
     </nav>
     <div id="mainContainer">
         <div class="loginContainer">
-            <form>
+            <form method="POST">
+            <?php 
+                if(isset($_SESSION['k'])){
+                        if($_SESSION['k']==1){
+                        $_SESSION['k']++;
+                        }
+                        else if($_SESSION['k']==2){
+                            echo "<span id='successLogged'>You are successfully registered</span>";
+                            $_SESSION['k']++;
+                            }
+                        else if($_SESSION['k']==3){
+                                unset($_SESSION['k']);
+                                }
+                }
+               echo $account->getError(Validate::$logginFailed); ?>
                 <p><label for="username">Username</label></p>
                 <p><input name="username" type="text" placeholder="Username"></p>
                 <p><label for="password">Password</label></p>
                 <p><input name="password" type="password" placeholder="Password"></p>
-                <button name="submitbotton" type="submit">Login</button>
+                <button name="loginbotton" type="submit">Login</button>
             </form>
+            <div id="toRegister">
+               <a>Have you not registered? Please click here</a>
+            </div>
+        </div>
+        <div class="registerContainer">
+            <form action="register.php" method="POST">
+                <?php echo $account->getError(Validate::$usernameless); ?>
+                <?php echo $account->getError(Validate::$usernameTaken); ?>
+                <p><label for="username">Username</label></p>
+                <p><input name="username" type="text" placeholder="Username"></p>
+                <?php echo $account->getError(Validate::$emailInvalid); ?>
+                <p><label for="email">Email</label></p>
+                <p><input name="email" type="email" placeholder="Email"></p>
+                <?php echo $account->getError(Validate::$passwordMismatch); ?>
+                <?php echo $account->getError(Validate::$passwordLess); ?>
+                <p><label for="password">Password</label></p>
+                <p><input name="password" type="password" placeholder="Password"></p>
+                <p><label for="password1">Password</label></p>
+                <p><input name="password1" type="password" placeholder="Confirm Password"></p>
+                <button name="submitbotton" type="submit">Register</button>
+            </form>
+            <div id="toLogin">
+               <a>If you registered, please click here to login</a>
+            </div>
         </div>
         <div class="featureContainer">
             <div class="contentContainer">
-            <h2>The feautures in this application</h2>
-            <p><i class="fa fa-check" style="color:green"></i>Get tickets Live</p>
-            <p><i class="fa fa-check" style="color:green"></i>Fast Booking</p>
-            <p><i class="fa fa-check" style="color:green"></i>Know your live status</p>
-            <p><i class="fa fa-check" style="color:green"></i>Get instant email</p>
+                <h2>The feautures in this application</h2>
+                <p><i class="fa fa-check" style="color:green"></i>Get tickets Live</p>
+                <p><i class="fa fa-check" style="color:green"></i>Fast Booking</p>
+                <p><i class="fa fa-check" style="color:green"></i>Know your live status</p>
+                <p><i class="fa fa-check" style="color:green"></i>Get instant email</p>
             </div>
         </div>
     </div>

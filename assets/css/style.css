@@ -49,7 +49,8 @@ li:hover
 }
 
 
-.loginContainer
+.loginContainer,
+.registerContainer
 {
     position: absolute;
     top: 30%;
@@ -58,13 +59,20 @@ li:hover
     border-right: 1px dotted;
 }
 
-.loginContainer input
+.loginContainer input,
+.registerContainer input
 {
     border: none;
     border-bottom: 1px solid;
 }
 
-.loginContainer button 
+.registerContainer
+{
+    display: none;
+}
+
+.loginContainer button,
+.registerContainer button 
 {
     background-color: transparent;
     border: none;
@@ -74,7 +82,8 @@ li:hover
     height: 38px;
 }
 
-.loginContainer button:hover
+.loginContainer button:hover,
+.registerContainer  button:hover
 {
     cursor: pointer;
 }
@@ -204,7 +213,6 @@ li:hover
     width: 50%;
     position: relative;
 } 
-<<<<<<< HEAD
 
 .serviceBottom p
 {
@@ -241,44 +249,6 @@ li:hover
     padding-left: 444px;
 }
 
-=======
-
-.serviceBottom p
-{
-    font-weight: 100;
-    font-family: arial;
-}
-
-.rightContainer1
-{
-    position: absolute;
-    top: 15%;
-    left: 70%;
-    height: 100%;
-    width: 42%;
-    left: 80%;
-}
-
-.rightContainer1 img
-{
-    width: 100%;
-    height: 100%;
-    border-radius: 39px;
-}
-
-.about
-{
-    position: absolute;
-    top: 12%;
-    width: 100%;
-}
-
-.container .header h1
-{
-    padding-left: 444px;
-}
-
->>>>>>> e0768d3f1afaf261c541900ace5a6527b1c79ef4
 .aboutus
 {
     width: 80%;
@@ -296,7 +266,6 @@ li:hover
     border-radius: 28px;
     height: 326px;
 }
-<<<<<<< HEAD
 
 .is_active
 {
@@ -311,6 +280,72 @@ li:hover
 #toRegister a:hover
 {
     text-decoration: none;
+    cursor: pointer;
 }
-=======
->>>>>>> e0768d3f1afaf261c541900ace5a6527b1c79ef4
+
+#toLogin a
+{
+    font-size: 12px;
+}
+
+#toLogin a:hover
+{
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.errorMessage
+{
+    font-size: 10px;
+    color: red;
+}
+
+.content
+{
+    top: 58px;
+    position: relative;
+}
+
+#backreg
+{
+    left: 44%;
+    top: 75px;
+    position: relative;
+}
+
+#homepageContainer
+{
+    top: 10%;
+    position: absolute;
+    width: 80%;
+    left: 15%;
+    height: 80%;
+}
+
+
+#sideNavs
+{
+    top: 45px;
+    position: absolute;
+    margin-left: 0px;
+    width: 182px;
+    height: 100%;
+    background-color: #efefef
+}
+
+#header2
+{
+    float: right;
+    margin-right: 30px;
+}
+
+#sideNavs .book:hover
+{
+    color: #656060;
+}
+
+#successLogged
+{
+    color: green;
+    font-size: 12px;
+}
